@@ -6,9 +6,9 @@
 #include <ukaikokko/ukaikokko.h>
 #include <stdio.h>
 
-ukaikokko::InterruptBufferedUART<128, 128, 128> pc(&huart2);
+ukaikokko::InterruptBufferedUART<216, 550, 5> pc(&huart2);
 ukaikokko::GPOutput led(DebugLED_GPIO_Port, DebugLED_Pin);
-ukaikokko::BufferedCAN<128, 128, 128> can(&hcan);
+ukaikokko::BufferedCAN<5, 5, 550> can(&hcan);
 
 static bool setupDone = false;
 
