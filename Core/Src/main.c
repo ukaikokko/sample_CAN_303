@@ -91,6 +91,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_CAN_Init();
   /* USER CODE BEGIN 2 */
+  user_setup();
 
   /* USER CODE END 2 */
 
@@ -98,6 +99,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    user_loop();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
