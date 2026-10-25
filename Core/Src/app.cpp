@@ -25,7 +25,7 @@ extern "C"
         printf(__TIME__ "\r\n");
 
         setbuf(stdout, NULL);
-        pc.begin();
+        pc.start();
         {
             CAN_FilterTypeDef filter;
             filter.FilterIdHigh = 0x0000;
@@ -40,7 +40,7 @@ extern "C"
             filter.SlaveStartFilterBank = 14; // meaningless for single CAN instance
             can.configFilter(&filter);
         }
-        can.begin();
+        can.start();
         can.activateNotification(CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY);
 
         led.write(0);
