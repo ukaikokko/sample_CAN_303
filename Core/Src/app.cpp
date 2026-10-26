@@ -10,8 +10,6 @@ ukaikokko::InterruptBufferedUART<128, 128> pc(&huart2);
 ukaikokko::GPOutput led(DebugLED_GPIO_Port, DebugLED_Pin);
 ukaikokko::BufferedCAN<128, 128> can(&hcan);
 
-static bool setupDone = false;
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -20,11 +18,11 @@ extern "C"
     void user_setup(void)
     {
         led.write(1);
+        setbuf(stdout, NULL);
         printf("sample_CAN_303\r\n");
         printf(__DATE__ "\r\n");
         printf(__TIME__ "\r\n");
 
-        setbuf(stdout, NULL);
         pc.start();
         {
             CAN_FilterTypeDef filter;
@@ -44,7 +42,6 @@ extern "C"
         can.activateNotification(CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY);
 
         led.write(0);
-        setupDone = true;
     }
 
     void user_loop(void)
@@ -86,16 +83,8 @@ extern "C"
 
     int _write(int file, char* ptr, int len)
     {
-        if (!setupDone)
-        {
-            HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 10); // ブロッキング
-            return len;
-        }
-        else
-        {
-            pc.write((uint8_t*)ptr, len);
-            return len;
-        }
+        pc.write((uint8_t*)ptr, len);
+        return len;
     }
 
     void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
