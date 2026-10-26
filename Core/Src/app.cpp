@@ -51,6 +51,9 @@ extern "C"
 
         if (now - pre >= 10)
         {
+            can.periodic();
+            pc.periodic();
+
             while (pc.available() > 0)
             {
                 const uint8_t data = static_cast<uint8_t>(pc.read());
@@ -73,9 +76,6 @@ extern "C"
                     }
                 }
             }
-
-            can.periodic();
-            pc.periodic();
 
             pre = now;
         }
