@@ -97,6 +97,11 @@ extern "C"
         pc.TxCplt(huart);
     }
 
+    void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
+    {
+        pc.whenError(huart);
+    }
+
     void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
     {
         can.RxCplt(hcan, CAN_RX_FIFO0);
